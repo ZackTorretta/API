@@ -7,7 +7,7 @@ const Product = require('./models/product');
 const app = Express();
 
 app.use(BodyParser.json());
-
+// keep these error handlers like this INSIDE THIS CONTROLLER
 const doActionThatMightFailValidation = async (request, response, action) => {
   try {
     await action();
@@ -26,6 +26,7 @@ app.get('/products', async (request, response) => {
     response.json(await Product.find(request.query).select('-_id -__v'));
   });
 });
+// AWAIT TO --V NEEDS TO BE IN DATABASE SERVICES. This is the controller.
 
 app.get('/products/:sku', async (request, response) => {
   await doActionThatMightFailValidation(request, response, async () => {
