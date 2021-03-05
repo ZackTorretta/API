@@ -6,6 +6,8 @@ const Product = require('./models/product');
 
 const app = Express();
 
+// const currentCount = 0;
+
 app.use(BodyParser.json());
 // keep these error handlers like this INSIDE THIS CONTROLLER
 const doActionThatMightFailValidation = async (request, response, action) => {
@@ -21,6 +23,13 @@ const doActionThatMightFailValidation = async (request, response, action) => {
   }
 };
 
+/* app.get('/count', (request, response) => {
+  response.json({
+    // eslint-disable-next-line no-plusplus
+    currentCount: currentCount++,
+  });
+}); */
+
 app.get('/products', async (request, response) => {
   await doActionThatMightFailValidation(request, response, async () => {
     response.json(await Product.find(request.query).select('-_id -__v'));
@@ -28,6 +37,7 @@ app.get('/products', async (request, response) => {
 });
 // AWAIT TO --V NEEDS TO BE IN DATABASE SERVICES. This is the controller.
 
+// below runs up to this one.
 app.get('/products/:sku', async (request, response) => {
   await doActionThatMightFailValidation(request, response, async () => {
     const getResult = await Product.findOne({ sku: request.params.sku }).select('-_id -__v');
@@ -90,8 +100,9 @@ app.patch('/products/:sku', async (request, response) => {
   });
 });
 
+// was getting errors before when running before I put in my cluster
 (async () => {
-  await Mongoose.connect('mongodb+srv://admin:admin@cluster0-cde82.mongodb.net/mongodb?retryWrites=true&w=majority', {
+  await Mongoose.connect('mongodb+srv://ADMIN:ztorre97@cluster0.doojn.mongodb.net/Cluster0?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
