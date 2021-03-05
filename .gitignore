@@ -105,3 +105,6 @@ dist
 
 # JetBrains Webstorm
 .idea/
+
+# JetBrains Webstorm
+__MACOSX/
