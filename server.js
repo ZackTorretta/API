@@ -6,6 +6,9 @@ const Product = require('./services/models/product');
 
 const app = Express();
 
+const postsRoute = require('./routes/userPost');
+
+app.use('/userPost', postsRoute);
 // const currentCount = 0;
 
 app.use(BodyParser.json());
@@ -49,12 +52,12 @@ app.get('/products/:sku', async (request, response) => {
   });
 });
 
-app.post('/products', async (request, response) => {
+/* app.post('/products', async (request, response) => {
   await doActionThatMightFailValidation(request, response, async () => {
     await new Product(request.body).save();
     response.sendStatus(201);
   });
-});
+}); */
 
 app.delete('/products', async (request, response) => {
   await doActionThatMightFailValidation(request, response, async () => {
