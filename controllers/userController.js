@@ -1,12 +1,4 @@
-const express = require('express');
-
-const router = express.Router();
-
-router.get('/posts');
-
-// might not be able to find
-
-const User = require('./services/models/user');
+const User = require('../services/models/user');
 
 const doActionThatMightFailValidation = async (request, response, action) => {
   try {
@@ -20,15 +12,13 @@ const doActionThatMightFailValidation = async (request, response, action) => {
     );
   }
 };
-router.post('/posts', async (request, response) => {
+// *** POST ***
+exports.postUser = async function (request, response) {
   await doActionThatMightFailValidation(request, response, async () => {
     await new User(request.body).save();
     response.sendStatus(201);
   });
-});
-
-router.post('/', async (request, response) => {
-  response.send('We are on posts');
-});
-
-module.exports = router;
+};
+exports.getUser = async function (request, response) {
+  response.send('SSN: blah blah');
+};

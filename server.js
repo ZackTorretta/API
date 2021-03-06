@@ -2,16 +2,19 @@ const Express = require('express');
 const BodyParser = require('body-parser');
 const Mongoose = require('mongoose');
 
-const Product = require('./services/models/product');
+const Product = require('./services/models/productModel');
 
 const app = Express();
 
-const postsRoute = require('./routes/userPost');
+const ProductRoute = require('./routes/routeProduct');
+const UserRoute = require('./routes/routeUser');
 
-app.use('/userPost', postsRoute);
+app.use('/routeUser', UserRoute);
+app.use('/routeProduct', ProductRoute);
 // const currentCount = 0;
 
 app.use(BodyParser.json());
+
 // keep these error handlers like this INSIDE THIS CONTROLLER
 const doActionThatMightFailValidation = async (request, response, action) => {
   try {
@@ -33,6 +36,7 @@ const doActionThatMightFailValidation = async (request, response, action) => {
   });
 }); */
 
+// APP USE ALL IN HERE
 app.get('/products', async (request, response) => {
   await doActionThatMightFailValidation(request, response, async () => {
     response.json(await Product.find(request.query).select('-_id -__v'));
