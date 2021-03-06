@@ -1,5 +1,5 @@
 const Mongoose = require('mongoose');
-
+// remember the SSN is unique
 require('bob-mongoose-currency').loadType(Mongoose);
 // validator confused a bit
 module.exports = Mongoose.model('User', new Mongoose.Schema({

@@ -20,5 +20,3 @@ module.exports = router;
 /* router.get('/SSN', async (request, response) => {
   response.send('SSN: blah blah');
 }); */
-
-module.exports = router;

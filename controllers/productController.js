@@ -1,7 +1,7 @@
 // const crypto = require('crypto');
 // functions from route moved in here. FUNCTIONS LIVE HERE
 // const ProductService = require('../services/models/productModel');
-const Product = require('../services/models/productModel');
+const Product = require('../models/productModel');
 
 const doActionThatMightFailValidation = async (request, response, action) => {
   try {
