@@ -9,7 +9,7 @@ app.use(BodyParser.json());
 const ProductRoute = require('./routes/routeProduct');
 const UserRoute = require('./routes/routeUser');
 
-app.use('/routeUser', UserRoute);
+app.use('/users', UserRoute);
 app.use('/routeProduct', ProductRoute);
 // const currentCount = 0;
 

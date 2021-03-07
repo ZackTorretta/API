@@ -8,6 +8,7 @@ const userController = require('../controllers/userController');
 
 router.post('/', userController.postUser);
 router.get('/', userController.getUser);
+router.get('/:postId', userController.getUserID);
 
 module.exports = router;
 /* router.post('/posts', async (request, response) => {
