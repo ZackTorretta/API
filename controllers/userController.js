@@ -6,20 +6,6 @@ const User = require('../services/DataBaseServices');
 const app = Express();
 app.use(bodyParser.json());
 
-/* const doActionThatMightFailValidation = async (request, response, action) => {
-  try {
-    await action();
-  } catch (e) {
-    response.sendStatus(
-      e.code === 11000
-        || e.stack.includes('ValidationError')
-        || (e.reason !== undefined && e.reason.code === 'ERR_ASSERTION')
-        ? 400 : 500,
-    );
-  }
-}; */
-// *** POST ***
-
 exports.postUser = async function (request, response) {
   const user = await User.pUser(request);
   user.save()
@@ -43,7 +29,7 @@ exports.getUser = async function (request, response) {
   const page = request.params.page ? request.params.page : 1;
   const limit = request.params.limit ? request.params.limit : 10;
   try {
-    const users = await User.postUser({}, page, limit);
+    const users = await User.getUser({}, request, page, limit);
     return response.status(200).json({ status: 200, data: users, message: 'Successfully Users Retrieved' });
   } catch (e) {
     return response.status(400).json({ status: 400, message: e.message });
@@ -56,22 +42,35 @@ exports.getUserID = async function (request, response) {
   const page = request.params.page ? request.params.page : 1;
   const limit = request.params.limit ? request.params.limit : 10;
   try {
-    const users = await User.postUser({}, page, limit);
+    const users = await User.getUser({}, request, page, limit);
     let foundUser = null;
-
-    // eslint-disable-next-line no-restricted-syntax
-    for (const key in users) {
-      if (users[key].id === request.params.postId) {
-        foundUser = users[key];
-        break;
-      } else if (users[key].ssn === request.params.postId) {
-        foundUser = users[key];
-        break;
+    console.log(request.baseUrl);
+    if (request.baseUrl === '/users') {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const key in users) {
+        if (users[key].id === request.params.postId) {
+          foundUser = users[key];
+          break;
+        } else if (users[key].ssn === request.params.postId) {
+          foundUser = users[key];
+          break;
+        }
+      }
+    } else {
+      console.log('inside else (products)');
+      // HAD TO CONVERT THIS INTO STRING BECAUSE THE SKU IS INTEGER
+      // eslint-disable-next-line no-restricted-syntax,guard-for-in
+      for (const key in users) {
+        JSON.parse(users[key].sku);
+        const x = JSON.stringify(users[key].sku);
+        console.log(x);
+        if (x === request.params.postId) {
+          foundUser = users[key];
+          break;
+        }
       }
     }
-    // if statement here to simply check if it was found or not.
-    // if it was found, then it prints it. if not, well 404 not found
-
+    console.log(foundUser);
     if (foundUser != null) {
       response.json(foundUser);
     } else {
@@ -85,6 +84,39 @@ exports.getUserID = async function (request, response) {
         ? 400 : 500,
     );
   }
+};
+// delete user by giving SSN
+exports.deleteUser = async function (request, response) {
+  try {
+    const user = await User.rUser(request);
+    console.log(user);
+    response.sendStatus(200).json(user);
+  } catch (e) {
+    response.sendStatus(
+      e.code === 11000
+        || e.stack.includes('ValidationError')
+        || (e.reason !== undefined && e.reason.code === 'ERR_ASSERTION')
+        ? 400 : 500,
+    );
+  }
+};
+
+// patches
+
+exports.patchUser = async function (request, response) {
+  try {
+    const user = await User.patchUser(request);
+    response.sendStatus(200).json(user);
+  } catch (e) {
+    response.sendStatus(
+      e.code === 11000
+        || e.stack.includes('ValidationError')
+        || (e.reason !== undefined && e.reason.code === 'ERR_ASSERTION')
+        ? 400 : 500,
+    );
+  }
+  /* const user = await User.rUser(request);
+  response.sendStatus(200).json(user); */
 };
 
 // 6043ec24df255c241057cd86

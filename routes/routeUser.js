@@ -9,15 +9,7 @@ const userController = require('../controllers/userController');
 router.post('/', userController.postUser);
 router.get('/', userController.getUser);
 router.get('/:postId', userController.getUserID);
+router.delete('/:postId', userController.deleteUser);
+router.patch('/:postId', userController.patchUser);
 
 module.exports = router;
-/* router.post('/posts', async (request, response) => {
-  await doActionThatMightFailValidation(request, response, async () => {
-    await new User(request.body).save();
-    response.sendStatus(201);
-  });
-}); */
-
-/* router.get('/SSN', async (request, response) => {
-  response.send('SSN: blah blah');
-}); */

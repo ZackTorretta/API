@@ -108,3 +108,6 @@ dist
 
 # JetBrains Webstorm
 __MACOSX/
+
+# JetBrains Webstorm
+.env

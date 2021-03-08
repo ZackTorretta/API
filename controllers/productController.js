@@ -1,7 +1,7 @@
 // const crypto = require('crypto');
 // functions from route moved in here. FUNCTIONS LIVE HERE
 // const ProductService = require('../services/models/productModel');
-const Product = require('../models/productModel');
+/* const Product = require('../models/productModel');
 
 const doActionThatMightFailValidation = async (request, response, action) => {
   try {
@@ -9,8 +9,8 @@ const doActionThatMightFailValidation = async (request, response, action) => {
   } catch (e) {
     response.sendStatus(
       e.code === 11000
-        || e.stack.includes('ValidationError')
-        || (e.reason !== undefined && e.reason.code === 'ERR_ASSERTION')
+            || e.stack.includes('ValidationError')
+            || (e.reason !== undefined && e.reason.code === 'ERR_ASSERTION')
         ? 400 : 500,
     );
   }
@@ -21,7 +21,7 @@ exports.postProducts = async function (request, response) {
     await new Product(request.body).save();
     response.sendStatus(201);
   });
-};
+}; */
 
 /*
 const salt = crypto.randomBytes(16).toString('base64');
