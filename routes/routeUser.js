@@ -1,15 +1,15 @@
 const Express = require('express');
 
 const router = Express.Router();
-const userController = require('../controllers/userController');
+const theController = require('../controllers/mainController');
 // might not be able to find
 // DOUBLE ..
 // const User = require('../services/models/user');
 
-router.post('/', userController.postUser);
-router.get('/', userController.getUser);
-router.get('/:postId', userController.getUserID);
-router.delete('/:postId', userController.deleteUser);
-router.patch('/:postId', userController.patchUser);
+router.post('/', theController.postUser);
+router.get('/', theController.getUser);
+router.get('/:postId', theController.getUserID);
+router.delete('/:postId', theController.deleteUser);
+router.patch('/:postId', theController.patchUser);
 
 module.exports = router;
