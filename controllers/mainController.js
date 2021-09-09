@@ -6,8 +6,9 @@ const User = require('../services/DataBaseServices');
 const app = Express();
 app.use(bodyParser.json());
 
-exports.postUser = async function (request, response) {
+exports.postUser = async (request, response) => {
   const user = await User.pUser(request);
+
   user.save()
     .then((data) => {
       response.sendStatus(201).json(data);
